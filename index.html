@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS专业打怪升级指南 - 李和平</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        /* Custom Font Imports - Noto Sans SC for clean Chinese text */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Fira+Code:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #fdf6e3;
+            /* Solarized Light Base */
+            color: #586e75;
+        }
+
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Chart Container Styles - Strictly Enforced */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #eee8d5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #93a1a1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #586e75;
+        }
+
+        /* Interactive Element Styles */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-active {
+            border-bottom: 2px solid #d33682;
+            /* Magenta accent */
+            color: #d33682;
+        }
+    </style>
+    <!-- Chosen Palette: Solarized Light (Modified) - Warm neutrals (#fdf6e3 base) with code-editor accents (Cyan #2aa198, Magenta #d33682, Blue #268bd2) to fit the CS theme while maintaining a light background. -->
+    <!-- Application Structure Plan: 
+         1. Hero Section "Player Profile": Introduces the speaker (Li Heping) as a game character with stats and tags. Establishes the "Gamified" metaphor.
+         2. Main Quest "The Foundation": Split into "Inner Power" (Math) and "Moves" (Coding). Uses a Radar Chart to visualize why Math matters for future tech (AI, Graphics), making abstract concepts concrete. Coding section uses interactive "Bug Fix" toggles.
+         3. Inventory "Tools of Trade": A grid of essential tools (VS Code, AI, GitHub). Clicking items reveals "Pro Tips" vs "Noob Mistakes".
+         4. Boss Fight "Final Exams": A strategic dashboard for the immediate threat (Exams). Uses a Bar Chart to prioritize study topics based on difficulty/importance.
+         5. Open World "Future Map": Roadmap for Competitions and Research.
+         6. Save Point "Conclusion": Summary and contact info.
+         Rationale: This structure breaks the linear presentation into exploration zones, allowing students to focus on their immediate needs (Exams) or long-term goals (Research) while keeping the "Level Up" theme consistent.
+    -->
+</head>
+
+<body class="bg-[#fdf6e3] text-[#586e75] min-h-screen flex flex-col relative">
+
+    <!-- Side Navigation (Mini Map) -->
+    <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6">
+        <a href="#profile" class="nav-dot group flex items-center justify-end gap-3" data-target="profile">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">玩家档案</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#2aa198] group-hover:scale-110 transition-all">
+                👨‍💻
+            </div>
+        </a>
+        <a href="#skills" class="nav-dot group flex items-center justify-end gap-3" data-target="skills">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">技能树</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#2aa198] group-hover:scale-110 transition-all">
+                🧠
+            </div>
+        </a>
+        <a href="#inventory" class="nav-dot group flex items-center justify-end gap-3" data-target="inventory">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">装备库</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#2aa198] group-hover:scale-110 transition-all">
+                🎒
+            </div>
+        </a>
+        <a href="#boss" class="nav-dot group flex items-center justify-end gap-3" data-target="boss">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">当前BOSS</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#dc322f] group-hover:scale-110 transition-all">
+                🔥
+            </div>
+        </a>
+
+        <a href="#future" class="nav-dot group flex items-center justify-end gap-3" data-target="future">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">开放世界</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#859900] group-hover:scale-110 transition-all">
+                🌍
+            </div>
+        </a>
+
+        <a href="#contact" class="nav-dot group flex items-center justify-end gap-3" data-target="contact">
+            <span
+                class="opacity-0 group-hover:opacity-100 transition-all duration-300 text-xs font-bold text-[#fdf6e3] bg-[#586e75] px-2 py-1 rounded shadow-lg transform translate-x-2 group-hover:translate-x-0">存档点</span>
+            <div
+                class="w-10 h-10 rounded-full bg-[#eee8d5] border-2 border-[#93a1a1] flex items-center justify-center text-lg shadow-md group-hover:border-[#268bd2] group-hover:scale-110 transition-all">
+                💾
+            </div>
+        </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-[#eee8d5] sticky top-0 z-50 shadow-sm border-b border-[#93a1a1]/20">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="font-bold text-lg text-[#b58900] flex items-center gap-2">
+                <span class="text-2xl">🎮</span> CS_LevelUp_Guide
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                <a href="#profile" class="hover:text-[#268bd2] transition-colors">玩家档案</a>
+                <a href="#skills" class="hover:text-[#268bd2] transition-colors">技能树</a>
+                <a href="#inventory" class="hover:text-[#268bd2] transition-colors">装备库</a>
+                <a href="#boss" class="hover:text-[#dc322f] transition-colors">当前BOSS</a>
+                <a href="#future" class="hover:text-[#859900] transition-colors">开放世界</a>
+            </div>
+            <button onclick="scrollToSection('contact')"
+                class="bg-[#268bd2] text-white px-4 py-1.5 rounded-full text-sm font-bold hover:bg-[#2aa198] transition-colors shadow-md">
+                加入队伍
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- Section 1: Hero / Player Profile -->
+        <section id="profile" class="max-w-6xl mx-auto px-4 py-12 md:py-20">
+            <div
+                class="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#93a1a1]/20 flex flex-col md:flex-row">
+                <div
+                    class="bg-[#073642] p-8 md:w-1/3 flex flex-col items-center justify-center text-center text-[#93a1a1]">
+                    <div
+                        class="w-32 h-32 rounded-full bg-[#586e75] flex items-center justify-center text-4xl mb-4 border-4 border-[#2aa198]">
+                        👨‍💻
+                    </div>
+                    <h1 class="text-2xl font-bold text-[#fdf6e3] mb-1">李和平</h1>
+                    <p class="text-[#2aa198] font-mono text-sm mb-4">Level 4 CS Student</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="px-2 py-1 bg-[#dc322f] text-white text-xs rounded-md font-mono">#熬夜冠军</span>
+                        <span class="px-2 py-1 bg-[#6c71c4] text-white text-xs rounded-md font-mono">#GitHub重度玩家</span>
+                        <span class="px-2 py-1 bg-[#268bd2] text-white text-xs rounded-md font-mono">#Agent</span>
+                    </div>
+                </div>
+                <div class="p-8 md:w-2/3 relative">
+                    <div class="absolute top-4 right-4 text-[#eee8d5] text-9xl opacity-20 select-none font-black">CS
+                    </div>
+                    <h2 class="text-3xl font-bold text-[#b58900] mb-4">只有计算机学生才懂的“打怪升级”指南</h2>
+                    <p class="mb-4 text-[#657b83] italic text-sm border-l-2 border-[#b58900] pl-3">
+                        特别感谢王老师和大家愿意挤出时间！！！虽然推迟了两周，但很高兴最终找到了合适的时间。
+                    </p>
+                    <p class="text-lg mb-6 leading-relaxed">
+                        各位计2501-3班的学弟学妹，晚上好！应王兴亚老师邀请，我来分享我的“游戏攻略”。
+                        现在的你们，是不是正在被<span class="font-bold text-[#dc322f]">《高等数学》</span>的极限折磨？
+                        是不是看着C++语言的<span class="font-bold text-[#dc322f]">“指针”</span>觉得圈圈绕绕？
+                    </p>
+                    <div class="bg-[#eee8d5] p-4 rounded-lg border-l-4 border-[#2aa198]">
+                        <p class="italic text-sm">
+                            <span class="font-bold">🎤 演讲者备注:</span> 迷茫是常态，我也曾是那个对着屏幕满屏红字 Error
+                            发呆的大一新生。今天不讲大道理，只聊如果能读档重来，我会怎么玩。
+                        </p>
+                    </div>
+                    <div class="mt-8 flex gap-4">
+                        <button onclick="scrollToSection('skills')"
+                            class="flex-1 bg-[#2aa198] text-white py-3 rounded-lg font-bold shadow-lg hover:bg-[#268bd2] transition-all transform hover:-translate-y-1 text-center">
+                            开始练级 (基础内功)
+                        </button>
+                        <button onclick="scrollToSection('boss')"
+                            class="flex-1 bg-[#cb4b16] text-white py-3 rounded-lg font-bold shadow-lg hover:bg-[#dc322f] transition-all transform hover:-translate-y-1 text-center">
+                            直面BOSS (期末生存)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Skill Tree (Math & Code) -->
+        <section id="skills" class="max-w-6xl mx-auto px-4 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#586e75]">技能树：内功与招式</h2>
+                <p class="text-[#93a1a1] mt-2">计算机专业的两大基石，缺一不可。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Left: Math (Inner Power) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-[#6c71c4]">
+                    <h3 class="text-xl font-bold text-[#6c71c4] mb-4 flex items-center gap-2">
+                        <span>🧠</span> 内功心法 (数学基础)
+                    </h3>
+                    <p class="text-sm mb-4">
+                        很多人问：“高数买菜又用不到，为什么要学？” <br>
+                        <span class="font-bold">真相：</span>它们是你未来解锁高级技能的前置条件。
+                    </p>
+
+                    <!-- Visualization: Math Utility Radar -->
+                    <div class="bg-[#fdf6e3] rounded-lg p-2 mb-4">
+                        <div class="chart-container">
+                            <canvas id="mathChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Visualization & Content Choices: Used a Radar Chart here to visualize the multi-dimensional value of mathematics. Instead of just listing subjects, it maps them to exciting future careers (AI, Games, Crypto), answering the "Why do we learn this?" question visually. -->
+
+                    <div class="bg-[#eee8d5] p-3 rounded text-sm text-[#586e75]">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>即使听不懂</strong>，也要硬着头皮刷题，保持“题感”。</li>
+                            <li>现在的“债”，大三学机器学习时都要加倍还。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Coding (Moves) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-[#859900]">
+                    <h3 class="text-xl font-bold text-[#859900] mb-4 flex items-center gap-2">
+                        <span>⚔️</span> 招式修炼 (编程语言)
+                    </h3>
+                    <p class="text-sm mb-4">
+                        核心法则：<span class="font-mono bg-[#eee8d5] px-1 rounded text-[#d33682]">Talk is cheap, show me the
+                            code.</span>
+                    </p>
+
+                    <!-- Interactive Coding Simulation -->
+                    <div
+                        class="bg-[#002b36] rounded-lg p-4 mb-4 font-mono text-xs md:text-sm text-[#839496] relative overflow-hidden group">
+                        <div class="flex justify-between items-center mb-2 border-b border-[#586e75] pb-2">
+                            <span>main.c</span>
+                            <span class="text-[#dc322f] animate-pulse">● Error Found</span>
+                        </div>
+                        <pre id="codeBlock" class="overflow-x-auto">
+int main() {
+  int *p = NULL;
+  // 错误：试图解引用空指针
+  *p = 10; 
+  printf("Value: %d", *p);
+  return 0;
+}
+                        </pre>
+                        <div id="errorMessage" class="text-[#dc322f] mt-2 border-t border-[#dc322f] pt-1">
+                            > Segmentation fault (core dumped)
+                        </div>
+
+                        <button id="fixBugBtn"
+                            class="absolute bottom-4 right-4 bg-[#859900] text-white px-3 py-1 rounded hover:bg-[#2aa198] transition-colors shadow-lg">
+                            🔧 修复Bug
+                        </button>
+                    </div>
+
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start gap-2">
+                            <span class="text-[#dc322f] font-bold">❌ 误区:</span>
+                            <span>背代码、只看书不动手。</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-[#859900] font-bold">✅ 正解:</span>
+                            <span>关掉书本，打开 VS Code。红色的 Error 才是你最好的老师。</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="text-[#268bd2] font-bold">🔍 技巧:</span>
+                            <span>多用 Google / Stack Overflow，少用百度。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Inventory (Tools) -->
+        <section id="inventory" class="bg-[#eee8d5] py-12">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-[#b58900]">🎒 装备库：工欲善其事</h2>
+                    <p class="text-[#657b83]">2025年的学生，要学会拒绝“伪勤奋”，拥抱先进生产力。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Tool 1: VS Code -->
+                    <div class="bg-white p-6 rounded-lg shadow card-hover border-l-4 border-[#268bd2]">
+                        <h4 class="font-bold text-lg text-[#268bd2] mb-2">VS Code (IDE)</h4>
+                        <p class="text-sm mb-4">轻量、插件多。拒绝只用记事本或古老的 VC++ 6.0。</p>
+                        <div class="text-xs bg-[#fdf6e3] p-2 rounded text-[#586e75]">
+                            推荐插件：<br>
+                            - C/C++<br>
+                            - Prettier<br>
+                            - Error Lens
+                        </div>
+                    </div>
+
+                    <!-- Tool 2: AI Support -->
+                    <div class="bg-white p-6 rounded-lg shadow card-hover border-l-4 border-[#2aa198]">
+                        <h4 class="font-bold text-lg text-[#2aa198] mb-2">AI 辅助 (Copilot/Ollama)</h4>
+                        <p class="text-sm mb-4">不要让AI替你写作业，要让它当你的24小时私教。</p>
+                        <div class="space-y-2">
+                            <button onclick="showPrompt('bad')"
+                                class="w-full text-left text-xs bg-[#fdf6e3] p-2 rounded hover:bg-[#dc322f] hover:text-white transition-colors">
+                                ❌ 坏Prompt: "帮我写个冒泡排序"
+                            </button>
+                            <button onclick="showPrompt('good')"
+                                class="w-full text-left text-xs bg-[#fdf6e3] p-2 rounded hover:bg-[#859900] hover:text-white transition-colors">
+                                ✅ 好Prompt: "像给5岁孩子讲故事一样解释这段指针代码"
+                            </button>
+                        </div>
+                        <div id="promptFeedback" class="mt-2 text-xs italic text-[#b58900] h-10">
+                            <!-- Feedback text appears here -->
+                        </div>
+                    </div>
+
+                    <!-- Tool 3: GitHub -->
+                    <div class="bg-white p-6 rounded-lg shadow card-hover border-l-4 border-[#6c71c4]">
+                        <h4 class="font-bold text-lg text-[#6c71c4] mb-2">GitHub</h4>
+                        <p class="text-sm mb-4">全宇宙最大的代码托管平台（不是交友网站）。</p>
+                        <ul class="text-xs list-disc list-inside text-[#586e75]">
+                            <li>尽早注册账号</li>
+                            <li>建立 GitHub Profile</li>
+                            <li>学会 `git push` 和 `git pull`</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Boss Fight (Exams) -->
+        <section id="boss" class="max-w-6xl mx-auto px-4 py-12">
+            <div class="bg-[#073642] rounded-2xl p-8 text-[#93a1a1] shadow-2xl relative overflow-hidden">
+                <!-- Background Decoration -->
+                <div class="absolute -right-10 -top-10 text-[10rem] opacity-5 text-[#dc322f]">⚠️</div>
+
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                        <div>
+                            <h2 class="text-3xl font-bold text-[#dc322f] animate-pulse">🔥 警告：期末BOSS战</h2>
+                            <p class="text-[#2aa198]">剩余时间：&lt; 2周 | 目标：存活并高分</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 bg-[#002b36] px-4 py-2 rounded border border-[#dc322f]/30">
+                            <span class="text-sm font-mono text-[#cb4b16]">当前状态: 临阵磨枪</span>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Left: Strategy Matrix -->
+                        <div>
+                            <h3 class="text-xl font-bold text-[#eee8d5] mb-4">复习优先级矩阵</h3>
+                            <p class="text-xs mb-4 text-[#93a1a1]">不要平均用力，死磕高回报内容。</p>
+                            <!-- Visualization: Bar Chart for Exam Topics -->
+                            <div class="chart-container bg-[#002b36]/50 rounded p-2">
+                                <canvas id="examChart"></canvas>
+                            </div>
+                            <!-- Visualization & Content Choices: A Horizontal Bar Chart showing "Effort vs Score Weight". This helps students prioritize what to study (Pointers/Structs) over less critical details, acting as a strategic guide. -->
+                        </div>
+
+                        <!-- Right: Action Plan -->
+                        <div class="flex flex-col justify-center space-y-6">
+                            <div class="bg-[#002b36] p-4 rounded border-l-4 border-[#b58900]">
+                                <h4 class="font-bold text-[#b58900] mb-2">⏳ 时间管理 (倒推法)</h4>
+                                <p class="text-sm">把最后两周做成甘特图。每天复习哪一章，精确到小时。</p>
+                                <p class="text-xs mt-2 text-[#dc322f]">⚠️ 警告：拒绝“坐在图书馆玩手机”的自我感动式复习。</p>
+                            </div>
+
+                            <div class="bg-[#002b36] p-4 rounded border-l-4 border-[#268bd2]">
+                                <h4 class="font-bold text-[#268bd2] mb-2">📚 核心策略</h4>
+                                <ul class="text-sm space-y-2 list-none">
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-[#859900]">✓</span>
+                                        <span><strong>C语言：</strong> 死磕指针、结构体、文件操作。刷近3年真题。</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-[#859900]">✓</span>
+                                        <span><strong>高数：</strong> 课后习题刷两遍，背熟基本积分公式。</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div
+                                class="text-center text-sm font-bold text-[#eee8d5] border border-[#2aa198] p-2 rounded">
+                                心态建设：不挂科是底线，高绩点是选择权。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Open World (Future) -->
+        <section id="future" class="max-w-6xl mx-auto px-4 py-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-[#586e75]">🌍 开放世界：眼光放长远</h2>
+                <p class="text-[#93a1a1]">除了上课，你还能解锁哪些地图？</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Card 1 -->
+                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <h3 class="text-xl font-bold text-[#b58900] mb-2">竞赛副本</h3>
+                    <p class="text-sm text-[#586e75] mb-4">刷怪练级的好去处。</p>
+                    <ul class="text-sm space-y-2">
+                        <li><span class="font-bold text-[#268bd2]">算法向：</span> 蓝桥杯, ACM/ICPC</li>
+                        <li><span class="font-bold text-[#2aa198]">项目向：</span> 互联网+, 服务外包大赛</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                    <div class="text-4xl mb-4">🔬</div>
+                    <h3 class="text-xl font-bold text-[#6c71c4] mb-2">科研初探</h3>
+                    <p class="text-sm text-[#586e75] mb-4">探索未知的迷雾地图。</p>
+                    <p class="text-sm">
+                        了解 <span class="bg-[#eee8d5] px-1 rounded">数字孪生</span>, <span
+                            class="bg-[#eee8d5] px-1 rounded">云边协同</span>。
+                        计算机不只是修电脑，还有星辰大海。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                    <div class="text-4xl mb-4">🌟</div>
+                    <h3 class="text-xl font-bold text-[#d33682] mb-2">个人品牌</h3>
+                    <p class="text-sm text-[#586e75] mb-4">你的第二张脸。</p>
+                    <ul class="text-sm space-y-2">
+                        <li>维护 GitHub Profile</li>
+                        <li>写技术博客 (CSDN/掘金/知乎)</li>
+                        <li>记录每一个踩坑过程</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Career Paths Expansion -->
+            <div class="mt-12 border-t border-[#93a1a1]/20 pt-10">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-[#268bd2]">🔮 人生航帆：选择你的未来之路</h3>
+                    <p class="text-[#93a1a1] mt-2">大三之后的分岔路口，没有标准答案。</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Path A: Academic -->
+                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#6c71c4] relative">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#6c71c4] text-white px-4 py-1 rounded-full text-sm font-bold">
+                            学术深造
+                        </div>
+                        <div class="mt-4 space-y-6">
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>📜</span> 保研 (Rank榜冲刺)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#6c71c4]">核心：</span>这是一场持续三年的长跑。
+                                    <br>不仅看绩点(GPA)，更看科研潜力(Paper)和竞赛奖项。大三下的“夏令营”、“预推免”是关键战役。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>⚔️</span> 考研 (副本Grind)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#6c71c4]">核心：</span>选择 > 努力。
+                                    <br>打破“信息差”比埋头苦读更重要。这是一场孤独的战斗，拼的是心态和自律。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>✈️</span> 出国 (跨服远征)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#6c71c4]">核心：</span>语言 + 绩点 + 适合的经济支持。
+                                    <br>早考雅思/托福。适合想体验不同教育体系或有其他规划的玩家。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Path B: Career -->
+                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#859900] relative">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#859900] text-white px-4 py-1 rounded-full text-sm font-bold">
+                            职场就业
+                        </div>
+                        <div class="mt-4 space-y-6">
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>💼</span> 实习 (实战演练)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#859900]">核心：</span>尽早接触真实工业界代码。
+                                    <br>大二/大三暑假是黄金期。一段大厂/独角兽的实习经历 > 10个课程大作业。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>💻</span> 面试 (LeetCode & 八股)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#859900]">核心：</span>基础不牢，地动山摇。
+                                    <br>手撕算法 (LeetCode Hot 100) + 计算机基础 (计网/OS/数据库) 是敲门砖。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>🛠️</span> 技术栈 (武器专精)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#859900]">核心：</span>T型人才（一专多能）。
+                                    <br>选定方向（后端/前端/AI算法/移动端）深耕，用 GitHub 项目证明你的代码能力。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Path C: Unconventional -->
+                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#cb4b16] relative">
+                        <div
+                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#cb4b16] text-white px-4 py-1 rounded-full text-sm font-bold">
+                            旷野探索
+                        </div>
+                        <div class="mt-4 space-y-6">
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>🚀</span> 创业 (建公会)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#cb4b16]">核心：</span>极强的抗压、xxx。
+                                    <br>需要极强的抗压能力和商业嗅觉。适合有改变世界梦想的“疯子”。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>💡</span> 独立开发 (独行侠)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#cb4b16]">核心：</span>产品力 + 运营。
+                                    <br>做自己喜欢的产品，养活自己。一人即是一支队伍。
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                    <span>🌏</span> Gap Year (游历)
+                                </h4>
+                                <p class="text-sm text-[#93a1a1] mt-1">
+                                    <span class="font-bold text-[#cb4b16]">核心：</span>寻找自我。
+                                    <br>人生不是轨道，而是旷野。停下来思考，也许比盲目奔跑更有意义。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <div class="inline-block bg-[#eee8d5] p-4 rounded-lg border-l-4 border-[#d33682]">
+                        <p class="text-[#586e75] font-bold text-lg">
+                            "无论选择哪条路，都没有对错，只要不后悔。"
+                        </p>
+                        <p class="text-sm text-[#93a1a1] mt-1">
+                            重要的是找到适合自己的节奏，而不是盲目随大流。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Footer / Save Point -->
+        <footer id="contact" class="bg-[#002b36] text-[#93a1a1] py-12 mt-12">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h2 class="text-2xl font-bold text-[#eee8d5] mb-6">💾 存档点：送给大家的三句话</h2>
+                <div class="space-y-4 mb-10 font-serif italic text-lg text-[#2aa198]">
+                    <p>"迷茫是正常的，行动是最好的解药。"</p>
+                    <p>"身体是革命的本钱（少熬夜，多运动）。"</p>
+                    <p>"保持好奇心 (Stay Hungry, Stay Foolish)。"</p>
+                </div>
+
+                <div class="border-t border-[#586e75] pt-8">
+                    <p class="mb-4">随时欢迎交流 (Q&A)</p>
+                    <div class="flex flex-col items-center gap-6">
+                        <div class="flex justify-center gap-4">
+                            <button onclick="toggleWeChatQR()"
+                                class="bg-[#073642] px-4 py-2 rounded text-[#eee8d5] hover:text-white hover:bg-[#2aa198] transition-colors cursor-pointer flex items-center gap-2 shadow-md">
+                                <span>WeChat: lhp18260181785</span>
+                                <span class="text-xs">▼</span>
+                            </button>
+                            <a href="#"
+                                class="bg-[#073642] px-4 py-2 rounded text-[#eee8d5] hover:text-white hover:bg-[#268bd2] transition-colors shadow-md">GitHub
+                                Profile</a>
+                        </div>
+
+                        <!-- WeChat QR Code (Hidden by default) -->
+                        <div id="wechatQR"
+                            class="hidden bg-white p-2 rounded-xl shadow-lg max-w-[180px] transform transition-all duration-300 origin-top">
+                            <img src="./wechat-qr.jpg" alt="WeChat QR Code" class="w-full h-auto rounded-lg">
+                            <p class="text-center text-xs text-[#586e75] mt-2 font-bold">扫码加好友</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs mt-8 text-[#586e75]">© 2025 李和平 | 计2501-3班经验分享会</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State Management
+        const appState = {
+            codeFixed: false,
+            currentPrompt: null
+        };
+
+        // Scroll Logic
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll Spy Logic for Side Nav
+        window.addEventListener('scroll', () => {
+            const sections = ['profile', 'skills', 'inventory', 'boss', 'future', 'contact'];
+            const navDots = document.querySelectorAll('.nav-dot div');
+
+            let current = '';
+
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                const rect = element.getBoundingClientRect();
+                // Check if section is in viewport (top third of screen)
+                if (rect.top <= window.innerHeight / 3) {
+                    current = section;
+                }
+            });
+
+            navDots.forEach(dot => {
+                const parent = dot.parentElement;
+                if (parent.getAttribute('data-target') === current) {
+                    dot.classList.add('bg-[#2aa198]', 'text-white', 'border-[#2aa198]', 'scale-110');
+                    dot.classList.remove('bg-[#eee8d5]', 'text-[#586e75]', 'border-[#93a1a1]');
+                } else {
+                    dot.classList.remove('bg-[#2aa198]', 'text-white', 'border-[#2aa198]', 'scale-110');
+                    dot.classList.add('bg-[#eee8d5]', 'text-[#586e75]', 'border-[#93a1a1]');
+                }
+            });
+        });
+
+        // Toggle WeChat QR
+        function toggleWeChatQR() {
+            const qr = document.getElementById('wechatQR');
+            qr.classList.toggle('hidden');
+        }
+
+        // --- Visualization Logic (Chart.js) ---
+
+        // 1. Math Radar Chart
+        document.addEventListener('DOMContentLoaded', function () {
+            const mathCtx = document.getElementById('mathChart').getContext('2d');
+            new Chart(mathCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['AI算法 (微积分)', '计算机图形学 (线代)', '密码学 (离散)', '数据科学 (概率)', '逻辑思维 (离散)'],
+                    datasets: [{
+                        label: '基础课程与未来技能关联度',
+                        data: [95, 85, 90, 80, 75],
+                        fill: true,
+                        backgroundColor: 'rgba(42, 161, 152, 0.2)', // Cyan transparent
+                        borderColor: '#2aa198', // Cyan solid
+                        pointBackgroundColor: '#268bd2',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#268bd2'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#93a1a1' },
+                            grid: { color: '#eee8d5' },
+                            pointLabels: {
+                                font: { size: 11, family: 'Noto Sans SC' },
+                                color: '#586e75'
+                            },
+                            ticks: { display: false, max: 100 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.label + ': 高相关性';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Exam Priority Bar Chart
+            const examCtx = document.getElementById('examChart').getContext('2d');
+            new Chart(examCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['指针 & 内存', '结构体', '微积分计算', '文件操作', '理论定义'],
+                    datasets: [{
+                        label: '复习投入产出比 (ROI)',
+                        data: [95, 85, 80, 70, 40],
+                        backgroundColor: [
+                            '#dc322f', // Red (Critical)
+                            '#cb4b16', // Orange
+                            '#b58900', // Yellow
+                            '#2aa198', // Cyan
+                            '#586e75'  // Grey (Low priority)
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal bar chart
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { color: '#073642' },
+                            ticks: { color: '#93a1a1' }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#eee8d5',
+                                font: { family: 'Noto Sans SC', weight: 'bold' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#073642',
+                            titleColor: '#eee8d5',
+                            bodyColor: '#2aa198'
+                        }
+                    }
+                }
+            });
+        });
+
+        // --- Interaction Logic ---
+
+        // Coding Dojo Logic
+        const codeBlock = document.getElementById('codeBlock');
+        const errorMsg = document.getElementById('errorMessage');
+        const fixBtn = document.getElementById('fixBugBtn');
+
+        const badCode = `int main() {
+  int *p = NULL;
+  // 错误：试图解引用空指针
+  *p = 10; 
+  printf("Value: %d", *p);
+  return 0;
+}`;
+
+        const goodCode = `int main() {
+  int a = 10;
+  int *p = &a; // 修复：指向有效内存
+  
+  printf("Value: %d", *p);
+  return 0; // Success!
+}`;
+
+        fixBtn.addEventListener('click', () => {
+            if (!appState.codeFixed) {
+                // Fix the code
+                codeBlock.textContent = goodCode;
+                codeBlock.classList.add('text-[#859900]'); // Green text
+                errorMsg.textContent = "> Program exited with code 0";
+                errorMsg.classList.remove('text-[#dc322f]');
+                errorMsg.classList.add('text-[#859900]');
+                fixBtn.textContent = "↩️ 还原错误";
+                fixBtn.classList.replace('bg-[#859900]', 'bg-[#586e75]');
+                appState.codeFixed = true;
+            } else {
+                // Revert
+                codeBlock.textContent = badCode;
+                codeBlock.classList.remove('text-[#859900]');
+                errorMsg.textContent = "> Segmentation fault (core dumped)";
+                errorMsg.classList.remove('text-[#859900]');
+                errorMsg.classList.add('text-[#dc322f]');
+                fixBtn.textContent = "🔧 修复Bug";
+                fixBtn.classList.replace('bg-[#586e75]', 'bg-[#859900]');
+                appState.codeFixed = false;
+            }
+        });
+
+        // AI Prompt Interaction
+        function showPrompt(type) {
+            const feedback = document.getElementById('promptFeedback');
+            if (type === 'bad') {
+                feedback.textContent = "⚠️ 这样你会失去思考能力，且无法真正掌握算法逻辑。";
+                feedback.className = "mt-2 text-xs font-bold text-[#dc322f] h-10 animate-bounce";
+            } else {
+                feedback.textContent = "🌟 完美！利用AI拆解复杂概念，辅助理解而非替代思考。";
+                feedback.className = "mt-2 text-xs font-bold text-[#859900] h-10 animate-pulse";
+            }
+        }
+    </script>
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</body>
+
+</html>
