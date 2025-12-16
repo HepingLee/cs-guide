@@ -187,10 +187,10 @@
                     </div>
                     <h2 class="text-3xl font-bold text-[#b58900] mb-4">只有计算机学生才懂的“打怪升级”指南</h2>
                     <p class="mb-4 text-[#657b83] italic text-sm border-l-2 border-[#b58900] pl-3">
-                        特别感谢王老师和大家愿意挤出时间！！！虽然推迟了两周，但很高兴最终找到了合适的时间。
+                        非常感谢王老师提供这个机会，也感谢大家抽出宝贵的晚自习时间来听我的学习经验分享，希望这些踩过的坑能帮你们少走弯路。
                     </p>
                     <p class="text-lg mb-6 leading-relaxed">
-                        各位计2501-3班的学弟学妹，晚上好！应王兴亚老师邀请，我来分享我的“游戏攻略”。
+                        各位计2501-3班的学弟学妹，晚上好！应王兴亚老师邀请，我来分享我的“学习经验”。
                         现在的你们，是不是正在被<span class="font-bold text-[#dc322f]">《高等数学》</span>的极限折磨？
                         是不是看着C++语言的<span class="font-bold text-[#dc322f]">“指针”</span>觉得圈圈绕绕？
                     </p>
@@ -262,15 +262,18 @@
                     <div
                         class="bg-[#002b36] rounded-lg p-4 mb-4 font-mono text-xs md:text-sm text-[#839496] relative overflow-hidden group">
                         <div class="flex justify-between items-center mb-2 border-b border-[#586e75] pb-2">
-                            <span>main.c</span>
+                            <span>main.cpp</span>
                             <span class="text-[#dc322f] animate-pulse">● Error Found</span>
                         </div>
                         <pre id="codeBlock" class="overflow-x-auto">
+#include &lt;iostream&gt;
+using namespace std;
+
 int main() {
-  int *p = NULL;
-  // 错误：试图解引用空指针
-  *p = 10; 
-  printf("Value: %d", *p);
+  int* ptr = nullptr;
+  // 致命错误：写入空指针
+  *ptr = 2077; 
+  cout &lt;&lt; "Val: " &lt;&lt; *ptr;
   return 0;
 }
                         </pre>
@@ -291,11 +294,11 @@ int main() {
                         </div>
                         <div class="flex items-start gap-2">
                             <span class="text-[#859900] font-bold">✅ 正解:</span>
-                            <span>关掉书本，打开 VS Code。红色的 Error 才是你最好的老师。</span>
+                            <span>启动开发工具，如VS Code。红色的 Error 才是你最好的老师。</span>
                         </div>
                         <div class="flex items-start gap-2">
                             <span class="text-[#268bd2] font-bold">🔍 技巧:</span>
-                            <span>多用 Google / Stack Overflow，少用百度。</span>
+                            <span>多用 AI工具 / Google / Stack Overflow，少用百度。</span>
                         </div>
                     </div>
                 </div>
@@ -306,7 +309,7 @@ int main() {
         <section id="inventory" class="bg-[#eee8d5] py-12">
             <div class="max-w-6xl mx-auto px-4">
                 <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-[#b58900]">🎒 装备库：工欲善其事</h2>
+                    <h2 class="text-3xl font-bold text-[#b58900]">🎒 装备库：工欲善其事，必先利其器</h2>
                     <p class="text-[#657b83]">2025年的学生，要学会拒绝“伪勤奋”，拥抱先进生产力。</p>
                 </div>
 
@@ -325,7 +328,7 @@ int main() {
 
                     <!-- Tool 2: AI Support -->
                     <div class="bg-white p-6 rounded-lg shadow card-hover border-l-4 border-[#2aa198]">
-                        <h4 class="font-bold text-lg text-[#2aa198] mb-2">AI 辅助 (Copilot/Ollama)</h4>
+                        <h4 class="font-bold text-lg text-[#2aa198] mb-2">AI 辅助 (Copilot/DeepSeek)</h4>
                         <p class="text-sm mb-4">不要让AI替你写作业，要让它当你的24小时私教。</p>
                         <div class="space-y-2">
                             <button onclick="showPrompt('bad')"
@@ -345,11 +348,12 @@ int main() {
                     <!-- Tool 3: GitHub -->
                     <div class="bg-white p-6 rounded-lg shadow card-hover border-l-4 border-[#6c71c4]">
                         <h4 class="font-bold text-lg text-[#6c71c4] mb-2">GitHub</h4>
-                        <p class="text-sm mb-4">全宇宙最大的代码托管平台（不是交友网站）。</p>
+                        <p class="text-sm mb-4">全球最大的代码托管平台（程序员的“军火库”，探索全世界的开源宝藏）。</p>
                         <ul class="text-xs list-disc list-inside text-[#586e75]">
                             <li>尽早注册账号</li>
                             <li>建立 GitHub Profile</li>
                             <li>学会 `git push` 和 `git pull`</li>
+                            <li>解锁多人联机模式：Git 是团队协作的基石。告别 doc(1), doc(2), doc(3) 的版本管理噩梦</li>
                         </ul>
                     </div>
                 </div>
@@ -398,11 +402,11 @@ int main() {
                                 <ul class="text-sm space-y-2 list-none">
                                     <li class="flex items-center gap-2">
                                         <span class="text-[#859900]">✓</span>
-                                        <span><strong>C语言：</strong> 死磕指针、结构体、文件操作。刷近3年真题。</span>
+                                        <span><strong>C++语言：</strong> 死磕指针、动态内存、常规算法；复习老师重点。</span>
                                     </li>
                                     <li class="flex items-center gap-2">
                                         <span class="text-[#859900]">✓</span>
-                                        <span><strong>高数：</strong> 课后习题刷两遍，背熟基本积分公式。</span>
+                                        <span><strong>高数A-1：</strong> 课后习题复盘两遍，背熟基本积分公式。</span>
                                     </li>
                                 </ul>
                             </div>
@@ -431,8 +435,8 @@ int main() {
                     <h3 class="text-xl font-bold text-[#b58900] mb-2">竞赛副本</h3>
                     <p class="text-sm text-[#586e75] mb-4">刷怪练级的好去处。</p>
                     <ul class="text-sm space-y-2">
-                        <li><span class="font-bold text-[#268bd2]">算法向：</span> 蓝桥杯, ACM/ICPC</li>
-                        <li><span class="font-bold text-[#2aa198]">项目向：</span> 互联网+, 服务外包大赛</li>
+                        <li><span class="font-bold text-[#268bd2]">算法向：</span> 蓝桥杯，ACM/ICPC</li>
+                        <li><span class="font-bold text-[#2aa198]">项目向：</span> 互联网+、服务外包、软件杯等学科竞赛</li>
                     </ul>
                 </div>
 
@@ -442,8 +446,9 @@ int main() {
                     <h3 class="text-xl font-bold text-[#6c71c4] mb-2">科研初探</h3>
                     <p class="text-sm text-[#586e75] mb-4">探索未知的迷雾地图。</p>
                     <p class="text-sm">
-                        了解 <span class="bg-[#eee8d5] px-1 rounded">数字孪生</span>, <span
-                            class="bg-[#eee8d5] px-1 rounded">云边协同</span>。
+                        了解 <span class="bg-[#eee8d5] px-1 rounded">大语言模型</span>，<span
+                            class="bg-[#eee8d5] px-1 rounded">AI智能体</span>，<span
+                            class="bg-[#eee8d5] px-1 rounded">具身智能</span>等等非常多的研究热点。
                         计算机不只是修电脑，还有星辰大海。
                     </p>
                 </div>
@@ -500,7 +505,7 @@ int main() {
                                 </h4>
                                 <p class="text-sm text-[#93a1a1] mt-1">
                                     <span class="font-bold text-[#6c71c4]">核心：</span>语言 + 绩点 + 适合的经济支持。
-                                    <br>早考雅思/托福。适合想体验不同教育体系或有其他规划的玩家。
+                                    <br>早考雅思/托福。合适想体验不同教育体系或有其他规划的玩家。
                                 </p>
                             </div>
                         </div>
@@ -690,7 +695,7 @@ int main() {
                     labels: ['AI算法 (微积分)', '计算机图形学 (线代)', '密码学 (离散)', '数据科学 (概率)', '逻辑思维 (离散)'],
                     datasets: [{
                         label: '基础课程与未来技能关联度',
-                        data: [95, 85, 90, 80, 75],
+                        data: [95, 95, 95, 95, 95],
                         fill: true,
                         backgroundColor: 'rgba(42, 161, 152, 0.2)', // Cyan transparent
                         borderColor: '#2aa198', // Cyan solid
@@ -732,7 +737,7 @@ int main() {
             new Chart(examCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['指针 & 内存', '结构体', '微积分计算', '文件操作', '理论定义'],
+                    labels: ['指针 & 内存', '微积分计算', '程序设计', '极限', '常见语法'],
                     datasets: [{
                         label: '复习投入产出比 (ROI)',
                         data: [95, 85, 80, 70, 40],
@@ -783,20 +788,26 @@ int main() {
         const errorMsg = document.getElementById('errorMessage');
         const fixBtn = document.getElementById('fixBugBtn');
 
-        const badCode = `int main() {
-  int *p = NULL;
-  // 错误：试图解引用空指针
-  *p = 10; 
-  printf("Value: %d", *p);
+        const badCode = `#include <iostream>
+using namespace std;
+
+int main() {
+  int* ptr = nullptr;
+  // 致命错误：写入空指针
+  *ptr = 2077; 
+  cout << "Val: " << *ptr;
   return 0;
 }`;
 
-        const goodCode = `int main() {
-  int a = 10;
-  int *p = &a; // 修复：指向有效内存
+        const goodCode = `#include <iostream>
+using namespace std;
+
+int main() {
+  int data = 2077;
+  int* ptr = &data; // 修复：指向合法内存
   
-  printf("Value: %d", *p);
-  return 0; // Success!
+  cout << "Val: " << *ptr;
+  return 0;
 }`;
 
         fixBtn.addEventListener('click', () => {
@@ -835,7 +846,6 @@ int main() {
             }
         }
     </script>
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
 </body>
