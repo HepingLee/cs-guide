@@ -433,7 +433,7 @@ int main() {
                 <h3 class="text-xl font-bold text-[#dc322f] mb-4 flex items-center gap-2">
                     <span>📜</span> 主线任务 (毕业硬指标)
                 </h3>
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid md:grid-cols-3 gap-8">
                     <!-- CET 4/6 -->
                     <div>
                         <h4 class="font-bold text-[#586e75] mb-2 flex items-center gap-2">
@@ -445,240 +445,282 @@ int main() {
                         </div>
                     </div>
 
-                    <!-- PU Credits -->
+                    <!-- GPA Requirement -->
                     <div>
                         <h4 class="font-bold text-[#586e75] mb-2 flex items-center gap-2">
-                            <span class="text-[#2aa198]">2.</span> PU学分 (第二课堂)
+                            <span class="text-[#2aa198]">2.</span> 必修课绩点 (GPA ≥ 2.00)
                         </h4>
-                        <p class="text-sm text-[#93a1a1] mb-3">毕业门槛之一，拒绝临毕业才疯狂补分。</p>
+                        <p class="text-sm text-[#93a1a1] mb-2">必修课程累计平均绩点不低于 <span
+                                class="text-[#dc322f] font-bold">2.00</span>，否则无法毕业！</p>
+                        <div class="bg-[#fdf6e3] p-3 rounded text-xs text-[#586e75]">
+                            <span class="font-bold">⚠️ 警告:</span> 2.00绩点对应百分制约 <span class="font-bold">70分</span>。挂科(<
+                                60分)绩点为0，会严重拉低平均绩点。 </div>
+                                <!-- GPA Image Modal Trigger -->
+                                <button onclick="toggleGPAModal()"
+                                    class="mt-3 w-full text-xs bg-[#268bd2] text-white py-2 px-3 rounded hover:bg-[#2aa198] transition-colors">
+                                    📊 查看绩点计算规则
+                                </button>
+                        </div>
 
-                        <!-- Progress Bars -->
-                        <div class="space-y-3 text-xs">
-                            <!-- Total -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>总实践学时 (150分)</span>
-                                    <span class="text-[#859900] font-bold">已达成 (486)</span>
+                        <!-- PU Credits -->
+                        <div>
+                            <h4 class="font-bold text-[#586e75] mb-2 flex items-center gap-2">
+                                <span class="text-[#2aa198]">3.</span> PU学分 (第二课堂)
+                            </h4>
+                            <p class="text-sm text-[#93a1a1] mb-3">毕业门槛之一，拒绝临毕业才疯狂补分。</p>
+
+                            <!-- Progress Bars -->
+                            <div class="space-y-3 text-xs">
+                                <!-- Total -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>总实践学时 (150分)</span>
+                                        <span class="text-[#859900] font-bold">已达成 (486)</span>
+                                    </div>
+                                    <div class="w-full bg-[#eee8d5] rounded-full h-2">
+                                        <div class="bg-[#859900] h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
                                 </div>
-                                <div class="w-full bg-[#eee8d5] rounded-full h-2">
-                                    <div class="bg-[#859900] h-2 rounded-full" style="width: 100%"></div>
+                                <!-- Culture -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>校园文化活动 (60分)</span>
+                                        <span class="text-[#859900]">96/60</span>
+                                    </div>
+                                    <div class="w-full bg-[#eee8d5] rounded-full h-2">
+                                        <div class="bg-[#2aa198] h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Culture -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>校园文化活动 (60分)</span>
-                                    <span class="text-[#859900]">96/60</span>
+                                <!-- Social -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>思政社科 (20分)</span>
+                                        <span class="text-[#859900]">35/20</span>
+                                    </div>
+                                    <div class="w-full bg-[#eee8d5] rounded-full h-2">
+                                        <div class="bg-[#268bd2] h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
                                 </div>
-                                <div class="w-full bg-[#eee8d5] rounded-full h-2">
-                                    <div class="bg-[#2aa198] h-2 rounded-full" style="width: 100%"></div>
+                                <!-- Service -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>公益服务 (10分)</span>
+                                        <span class="text-[#859900]">28/10</span>
+                                    </div>
+                                    <div class="w-full bg-[#eee8d5] rounded-full h-2">
+                                        <div class="bg-[#cb4b16] h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Social -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>思政社科 (20分)</span>
-                                    <span class="text-[#859900]">35/20</span>
-                                </div>
-                                <div class="w-full bg-[#eee8d5] rounded-full h-2">
-                                    <div class="bg-[#268bd2] h-2 rounded-full" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <!-- Service -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>公益服务 (10分)</span>
-                                    <span class="text-[#859900]">28/10</span>
-                                </div>
-                                <div class="w-full bg-[#eee8d5] rounded-full h-2">
-                                    <div class="bg-[#cb4b16] h-2 rounded-full" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <!-- Social Practice -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>寒暑假社会实践 (75分)</span>
-                                    <span class="text-[#859900]">80/75</span>
-                                </div>
-                                <div class="w-full bg-[#eee8d5] rounded-full h-2">
-                                    <div class="bg-[#6c71c4] h-2 rounded-full" style="width: 100%"></div>
+                                <!-- Social Practice -->
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>寒暑假社会实践 (75分)</span>
+                                        <span class="text-[#859900]">80/75</span>
+                                    </div>
+                                    <div class="w-full bg-[#eee8d5] rounded-full h-2">
+                                        <div class="bg-[#6c71c4] h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col md:flex-row gap-6">
-                <!-- Card 1 -->
-                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
-                    <div class="text-4xl mb-4">🏆</div>
-                    <h3 class="text-xl font-bold text-[#b58900] mb-2">竞赛副本</h3>
-                    <p class="text-sm text-[#586e75] mb-4">刷怪练级的好去处。</p>
-                    <ul class="text-sm space-y-2">
-                        <li><span class="font-bold text-[#268bd2]">算法向：</span> 蓝桥杯，ACM/ICPC等算法竞赛</li>
-                        <li><span class="font-bold text-[#2aa198]">项目向：</span> 互联网+、服务外包、软件杯等学科竞赛</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
-                    <div class="text-4xl mb-4">🔬</div>
-                    <h3 class="text-xl font-bold text-[#6c71c4] mb-2">科研初探</h3>
-                    <p class="text-sm text-[#586e75] mb-4">探索未知的迷雾地图。</p>
-                    <p class="text-sm">
-                        了解 <span class="bg-[#eee8d5] px-1 rounded">大语言模型</span>，<span
-                            class="bg-[#eee8d5] px-1 rounded">AI智能体</span>，<span
-                            class="bg-[#eee8d5] px-1 rounded">具身智能</span>等等非常多的研究热点。
-                        计算机不只是修电脑，还有星辰大海。
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
-                    <div class="text-4xl mb-4">🌟</div>
-                    <h3 class="text-xl font-bold text-[#d33682] mb-2">个人品牌</h3>
-                    <p class="text-sm text-[#586e75] mb-4">你的第二张脸。</p>
-                    <ul class="text-sm space-y-2">
-                        <li>维护 GitHub Profile</li>
-                        <li>写技术博客 (CSDN/掘金/知乎)</li>
-                        <li>记录每一个踩坑过程</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Career Paths Expansion -->
-            <div class="mt-12 border-t border-[#93a1a1]/20 pt-10">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-[#268bd2]">🔮 人生航帆：选择你的未来之路</h3>
-                    <p class="text-[#93a1a1] mt-2">大三之后的分岔路口，没有标准答案。</p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Path A: Academic -->
-                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#6c71c4] relative">
-                        <div
-                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#6c71c4] text-white px-4 py-1 rounded-full text-sm font-bold">
-                            学术深造
-                        </div>
-                        <div class="mt-4 space-y-6">
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>📜</span> 保研 (Rank榜冲刺)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#6c71c4]">核心：</span>这是一场持续三年的长跑。
-                                    <br>不仅看绩点(GPA)，更看科研潜力(Paper)和竞赛奖项。大三下的“夏令营”、“预推免”是关键战役。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>⚔️</span> 考研 (副本Grind)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#6c71c4]">核心：</span>选择 > 努力。
-                                    <br>打破“信息差”比埋头苦读更重要。这是一场孤独的战斗，拼的是心态和自律。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>✈️</span> 出国 (跨服远征)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#6c71c4]">核心：</span>语言 + 绩点 + 适合的经济支持。
-                                    <br>早考雅思/托福。合适想体验不同教育体系或有其他规划的玩家。
-                                </p>
-                            </div>
-                        </div>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Card 1 -->
+                    <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="text-xl font-bold text-[#b58900] mb-2">竞赛副本</h3>
+                        <p class="text-sm text-[#586e75] mb-4">刷怪练级的好去处。</p>
+                        <ul class="text-sm space-y-2">
+                            <li><span class="font-bold text-[#268bd2]">算法向：</span> 蓝桥杯，ACM/ICPC等算法竞赛</li>
+                            <li><span class="font-bold text-[#2aa198]">项目向：</span> 互联网+、服务外包、软件杯等学科竞赛</li>
+                        </ul>
                     </div>
 
-                    <!-- Path B: Career -->
-                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#859900] relative">
-                        <div
-                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#859900] text-white px-4 py-1 rounded-full text-sm font-bold">
-                            职场就业
-                        </div>
-                        <div class="mt-4 space-y-6">
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>💼</span> 实习 (实战演练)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#859900]">核心：</span>尽早接触真实工业界代码。
-                                    <br>大二/大三暑假是黄金期。一段大厂/独角兽的实习经历 > 10个课程大作业。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>💻</span> 面试 (LeetCode & 八股)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#859900]">核心：</span>基础不牢，地动山摇。
-                                    <br>手撕算法 (LeetCode Hot 100) + 计算机基础 (计网/OS/数据库) 是敲门砖。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>🛠️</span> 技术栈 (武器专精)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#859900]">核心：</span>T型人才（一专多能）。
-                                    <br>选定方向（后端/前端/AI算法/移动端）深耕，用 GitHub 项目证明你的代码能力。
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Path C: Unconventional -->
-                    <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#cb4b16] relative">
-                        <div
-                            class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#cb4b16] text-white px-4 py-1 rounded-full text-sm font-bold">
-                            旷野探索
-                        </div>
-                        <div class="mt-4 space-y-6">
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>🚀</span> 创业 (建公会)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#cb4b16]">核心：</span>极强的抗压、xxx。
-                                    <br>需要极强的抗压能力和商业嗅觉。适合有改变世界梦想的“疯子”。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>💡</span> 独立开发 (独行侠)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#cb4b16]">核心：</span>产品力 + 运营。
-                                    <br>做自己喜欢的产品，养活自己。一人即是一支队伍。
-                                </p>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#586e75] flex items-center gap-2">
-                                    <span>🌏</span> Gap Year (游历)
-                                </h4>
-                                <p class="text-sm text-[#93a1a1] mt-1">
-                                    <span class="font-bold text-[#cb4b16]">核心：</span>寻找自我。
-                                    <br>人生不是轨道，而是旷野。停下来思考，也许比盲目奔跑更有意义。
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center">
-                    <div class="inline-block bg-[#eee8d5] p-4 rounded-lg border-l-4 border-[#d33682]">
-                        <p class="text-[#586e75] font-bold text-lg">
-                            "无论选择哪条路，都没有对错，只要不后悔。"
-                        </p>
-                        <p class="text-sm text-[#93a1a1] mt-1">
-                            重要的是找到适合自己的节奏，而不是盲目随大流。
+                    <!-- Card 2 -->
+                    <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                        <div class="text-4xl mb-4">🔬</div>
+                        <h3 class="text-xl font-bold text-[#6c71c4] mb-2">科研初探</h3>
+                        <p class="text-sm text-[#586e75] mb-4">探索未知的迷雾地图。</p>
+                        <p class="text-sm">
+                            了解 <span class="bg-[#eee8d5] px-1 rounded">大语言模型</span>，<span
+                                class="bg-[#eee8d5] px-1 rounded">AI智能体</span>，<span
+                                class="bg-[#eee8d5] px-1 rounded">具身智能</span>等等非常多的研究热点。
+                            计算机不只是修电脑，还有星辰大海。
                         </p>
                     </div>
+
+                    <!-- Card 3 -->
+                    <div class="flex-1 bg-white p-6 rounded-xl shadow border border-[#eee8d5] card-hover">
+                        <div class="text-4xl mb-4">🌟</div>
+                        <h3 class="text-xl font-bold text-[#d33682] mb-2">个人品牌</h3>
+                        <p class="text-sm text-[#586e75] mb-4">你的第二张脸。</p>
+                        <ul class="text-sm space-y-2">
+                            <li>维护 GitHub Profile</li>
+                            <li>写技术博客 (CSDN/掘金/知乎)</li>
+                            <li>记录每一个踩坑过程</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Career Paths Expansion -->
+                <div class="mt-12 border-t border-[#93a1a1]/20 pt-10">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-[#268bd2]">🔮 人生航帆：选择你的未来之路</h3>
+                        <p class="text-[#93a1a1] mt-2">大三之后的分岔路口，没有标准答案。</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Path A: Academic -->
+                        <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#6c71c4] relative">
+                            <div
+                                class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#6c71c4] text-white px-4 py-1 rounded-full text-sm font-bold">
+                                学术深造
+                            </div>
+                            <div class="mt-4 space-y-6">
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>📜</span> 保研 (Rank榜冲刺)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#6c71c4]">核心：</span>这是一场持续三年的长跑。
+                                        <br>不仅看绩点(GPA)，更看科研潜力(Paper)和竞赛奖项。大三下的“夏令营”、“预推免”是关键战役。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>⚔️</span> 考研 (副本Grind)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#6c71c4]">核心：</span>选择 > 努力。
+                                        <br>打破“信息差”比埋头苦读更重要。这是一场孤独的战斗，拼的是心态和自律。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>✈️</span> 出国 (跨服远征)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#6c71c4]">核心：</span>语言 + 绩点 + 适合的经济支持。
+                                        <br>早考雅思/托福。合适想体验不同教育体系或有其他规划的玩家。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Path B: Career -->
+                        <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#859900] relative">
+                            <div
+                                class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#859900] text-white px-4 py-1 rounded-full text-sm font-bold">
+                                职场就业
+                            </div>
+                            <div class="mt-4 space-y-6">
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>💼</span> 实习 (实战演练)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#859900]">核心：</span>尽早接触真实工业界代码。
+                                        <br>大二/大三暑假是黄金期。一段大厂/独角兽的实习经历 > 10个课程大作业。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>💻</span> 面试 (LeetCode & 八股)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#859900]">核心：</span>基础不牢，地动山摇。
+                                        <br>手撕算法 (LeetCode Hot 100) + 计算机基础 (计网/OS/数据库) 是敲门砖。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>🛠️</span> 技术栈 (武器专精)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#859900]">核心：</span>T型人才（一专多能）。
+                                        <br>选定方向（后端/前端/AI算法/移动端）深耕，用 GitHub 项目证明你的代码能力。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Path C: Unconventional -->
+                        <div class="bg-[#fdf6e3] p-6 rounded-xl border-2 border-dashed border-[#cb4b16] relative">
+                            <div
+                                class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#cb4b16] text-white px-4 py-1 rounded-full text-sm font-bold">
+                                旷野探索
+                            </div>
+                            <div class="mt-4 space-y-6">
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>🚀</span> 创业 (建公会)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#cb4b16]">核心：</span>极强的抗压、xxx。
+                                        <br>需要极强的抗压能力和商业嗅觉。适合有改变世界梦想的“疯子”。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>💡</span> 独立开发 (独行侠)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#cb4b16]">核心：</span>产品力 + 运营。
+                                        <br>做自己喜欢的产品，养活自己。一人即是一支队伍。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#586e75] flex items-center gap-2">
+                                        <span>🌏</span> Gap Year (游历)
+                                    </h4>
+                                    <p class="text-sm text-[#93a1a1] mt-1">
+                                        <span class="font-bold text-[#cb4b16]">核心：</span>寻找自我。
+                                        <br>人生不是轨道，而是旷野。停下来思考，也许比盲目奔跑更有意义。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <div class="inline-block bg-[#eee8d5] p-4 rounded-lg border-l-4 border-[#d33682]">
+                            <p class="text-[#586e75] font-bold text-lg">
+                                "无论选择哪条路，都没有对错，只要不后悔。"
+                            </p>
+                            <p class="text-sm text-[#93a1a1] mt-1">
+                                重要的是找到适合自己的节奏，而不是盲目随大流。
+                            </p>
+                        </div>
+                    </div>
+                </div>
         </section>
+
+        <!-- GPA Modal -->
+        <div id="gpaModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4"
+            onclick="toggleGPAModal()">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-3xl max-h-[90vh] overflow-auto relative"
+                onclick="event.stopPropagation()">
+                <button onclick="toggleGPAModal()"
+                    class="absolute top-4 right-4 text-[#586e75] hover:text-[#dc322f] text-2xl font-bold">&times;</button>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-[#586e75] mb-4 flex items-center gap-2">
+                        <span>📊</span> 绩点计算规则
+                    </h3>
+                    <img src="./gpa-rules.png" alt="绩点计算规则" class="w-full rounded-lg border border-[#eee8d5]">
+                    <div class="mt-4 bg-[#fdf6e3] p-4 rounded-lg text-sm text-[#586e75]">
+                        <p class="font-bold text-[#dc322f] mb-2">⚠️ 重点提醒：</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>必修课程累计平均绩点 <span class="font-bold">≥ 2.00</span> 是毕业硬性要求</li>
+                            <li>百分制 <span class="font-bold">70-68分</span> 对应绩点 2.00</li>
+                            <li>低于60分（不及格）绩点为 <span class="text-[#dc322f] font-bold">0</span>，会严重拉低平均绩点</li>
+                            <li>计算公式：平均绩点 = Σ(单门课程学分 × 相应绩点) / Σ 课程学分</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Section 6: Footer / Save Point -->
         <footer id="contact" class="bg-[#002b36] text-[#93a1a1] py-12 mt-12">
@@ -783,6 +825,13 @@ int main() {
         function toggleWeChatQR() {
             const qr = document.getElementById('wechatQR');
             qr.classList.toggle('hidden');
+        }
+
+        // Toggle GPA Modal
+        function toggleGPAModal() {
+            const modal = document.getElementById('gpaModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
         }
 
         // --- Visualization Logic (Chart.js) ---
